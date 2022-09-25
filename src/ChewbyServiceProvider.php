@@ -2,9 +2,8 @@
 
 namespace Chewbathra\Chewby;
 
-use Spatie\LaravelPackageTools\Package;
-use Chewbathra\Chewby\Commands\ChewbyCommand;
 use Illuminate\Support\ServiceProvider;
+use Spatie\LaravelPackageTools\Package;
 
 class ChewbyServiceProvider extends ServiceProvider
 {
