@@ -24,14 +24,21 @@ class ChewbyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'chewby');
         $this->publishes([
             __DIR__.'/../config/chewby.php' => config_path('chewby.php'),
-        ]);
-
-        $this->bootComponents('./resources/views/components');
+        ], 'chewby-config');
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'chewby');
+        $this->publishes([
+            __DIR__.'/../resources/views' => resource_path('views/vendor/chewby'),
+        ], 'chewby-views');
+        $this->bootComponents(__DIR__.'/../resources/views/components');
     }
 
+    /**
+     * @param  string  $directory
+     * @return void
+     */
     private function bootComponents(string $directory): void
     {
         foreach (new DirectoryIterator($directory) as $file) {
