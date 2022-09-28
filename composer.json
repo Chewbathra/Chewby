@@ -34,7 +34,6 @@
         "pestphp/pest": "^1.21",
         "pestphp/pest-plugin-laravel": "^1.1",
         "pestphp/pest-plugin-mock": "^1.0",
-        "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan-deprecation-rules": "^1.0",
         "phpstan/phpstan-phpunit": "^1.0",
         "phpunit/phpunit": "^9.5"
@@ -52,8 +51,7 @@
     "config": {
         "sort-packages": true,
         "allow-plugins": {
-            "pestphp/pest-plugin": true,
-            "phpstan/extension-installer": true
+            "pestphp/pest-plugin": true
         }
     },
     "extra": {
@@ -62,7 +60,8 @@
                 "Chewbathra\\Chewby\\ChewbyServiceProvider"
             ],
             "aliases": {
-                "Chewby": "Chewbathra\\Chewby\\Facades\\Chewby"
+                "Chewby": "Chewbathra\\Chewby\\Facades\\Chewby",
+                "Config": "Chewbathra\\Chewby\\Facades\\Config"
             }
         }
     },
