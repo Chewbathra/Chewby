@@ -1,0 +1,66 @@
+.chewby__loader {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 5;
+  display: none;
+  background-color: rgba(var(--loader-bgc), 0.7);
+}
+
+.chewby__loader--display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+%loader__bordered {
+  border-radius: 50%;
+  border: 3px solid;
+}
+
+.loader__spinner {
+  position: relative;
+  width: 10%;
+  min-width: 2rem;
+  aspect-ratio: 1;
+  @extend %loader__bordered;
+  border-color: transparent transparent var(--icon-color) var(--icon-color);
+  animation: rotation 1s ease infinite;
+  transform-origin: center center;
+}
+
+.loader__spinner::before,
+.loader__spinner::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+  width: 80%;
+  aspect-ratio: 1;
+  @extend %loader__bordered;
+  border-color: transparent var(--accent-color) transparent transparent;
+  animation: rotation 1s ease infinite;
+}
+
+.loader__spinner::after {
+  width: 50%;
+  aspect-ratio: 1;
+  border-color: transparent transparent var(--border-color) transparent;
+  animation: rotation 3s ease infinite;
+  // animation-direction: reverse;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
