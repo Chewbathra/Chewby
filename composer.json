@@ -15,9 +15,16 @@
             "role": "Developer"
         }
     ],
+    "scripts": {
+        "analyse": "vendor/bin/phpstan analyse",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint"
+    },
     "require": {
         "php": "^8.1",
-        "illuminate/contracts": "^9.0"
+        "illuminate/contracts": "^9.0",
+        "livewire/livewire": "^2.10"
     },
     "require-dev": {
         "laravel/pint": "^1.0",
@@ -26,6 +33,7 @@
         "orchestra/testbench": "^7.0",
         "pestphp/pest": "^1.21",
         "pestphp/pest-plugin-laravel": "^1.1",
+        "pestphp/pest-plugin-mock": "^1.0",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan-deprecation-rules": "^1.0",
         "phpstan/phpstan-phpunit": "^1.0",
@@ -40,12 +48,6 @@
         "psr-4": {
             "Chewbathra\\Chewby\\Tests\\": "tests"
         }
-    },
-    "scripts": {
-        "analyse": "vendor/bin/phpstan analyse",
-        "test": "vendor/bin/pest",
-        "test-coverage": "vendor/bin/pest --coverage",
-        "format": "vendor/bin/pint"
     },
     "config": {
         "sort-packages": true,
