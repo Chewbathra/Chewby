@@ -29,7 +29,7 @@ class ChewbyServiceProvider extends ServiceProvider
             __DIR__.'/../config/chewby.php' => config_path('chewby.php'),
         ]);
 
-        $this->bootComponents("./resources/views/components");
+        $this->bootComponents('./resources/views/components');
     }
 
     private function bootComponents(string $directory): void
