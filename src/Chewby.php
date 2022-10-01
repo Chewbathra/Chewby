@@ -4,17 +4,28 @@ namespace Chewbathra\Chewby;
 
 use Chewbathra\Chewby\Facades\Config;
 use Error;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 class Chewby
 {
     public function generateUrls(): void
     {
+        if (! config('chewby')) {
+            // Dont generate URLs when running "php artisan vendor:publish" because config file may be not created
+            // It can generate errors that prevent publishing
+            Log::channel('stderr')
+            ->alert("Routes not generated because \"chewby\" config file doesn't exist. 
+                    This error is normal if you are running \"vendor:publish\" command !");
+
+            return;
+        }
         $trackedModelsWithPath = Config::getTrackedModelsWithPath();
-        $base = Config::getConfig('base')[0];
-        if (! $base) {
+        $base = Config::getConfig('base');
+        if (count($base) == 0 || ! is_string($base[0])) {
             throw new Error('You need to define a base URL path for admin content in "config/chewby.php"');
         }
+        $base = $base[0];
         foreach ($trackedModelsWithPath as $model => $path) {
             $controller = Config::getControllerForModel($model);
             // Index
