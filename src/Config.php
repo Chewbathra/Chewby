@@ -2,12 +2,14 @@
 
 namespace Chewbathra\Chewby;
 
-use Chewbathra\Chewby\Http\Controllers\ResourceController;
+use Chewbathra\Chewby\Http\Controllers\Admin\ResourceController;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 class Config
 {
+    private string $controllersNamespace = 'App\\Http\\Controllers\\Admin\\';
+
     /**
      * Return config array, transformed to Laravel Collection
      *
@@ -62,7 +64,7 @@ class Config
             }
         }
         $modelBasename = class_basename($model);
-        $controllerClassName = 'App\\Http\\Controllers\\Admin\\'.$modelBasename.'Controller';
+        $controllerClassName = $this->controllersNamespace.$modelBasename.'Controller';
 
         if (! class_exists($controllerClassName)) {
             throw new \Error("The model \"$model\" has been 

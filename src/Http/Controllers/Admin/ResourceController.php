@@ -1,21 +1,15 @@
 <?php
 
-namespace Chewbathra\Chewby\Http\Controllers;
+namespace Chewbathra\Chewby\Http\Controllers\Admin;
 
 use Chewbathra\Chewby\Facades\Chewby;
 use DateTime;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Routing\Controller as BaseController;
 use LogicException;
 
-abstract class ResourceController extends BaseController
+abstract class ResourceController extends Controller
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
     public string $resourceName;
 
     public string $resourcePath;
