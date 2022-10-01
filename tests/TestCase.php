@@ -3,7 +3,9 @@
 namespace Chewbathra\Chewby\Tests;
 
 use Chewbathra\Chewby\ChewbyServiceProvider;
+use Chewbathra\Chewby\Config;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Pest\Datasets;
 
 class TestCase extends Orchestra
 {
@@ -27,6 +29,13 @@ class TestCase extends Orchestra
     public function getEnvironmentSetUp($app)
     {
         config()->set('database.default', 'testing');
+        config()->set('chewby', Datasets::get('chewbyConfig'));
+        // $object = new Config();
+        // $reflection = new \ReflectionObject($object);
+        // $property = $reflection->getProperty('controllersNamespace');
+        // $property->setValue($object, 'Chewbathra\\Chewby\\Tests\\Datasets\\Controllers');
+        // $object->controllersNamespace = "test";
+        // $this->config = $object;
 
         /*
         $migration = include __DIR__.'/../database/migrations/create_skeleton_table.php.stub';
