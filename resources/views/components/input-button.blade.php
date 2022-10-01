@@ -3,11 +3,9 @@
         'chewby__input--button',
         $attributes["class"]
     ])>
-    @php
-    @endphp
     <input
-        {{$attributes->except(["class"])}}
+        {{$attributes->except(["class", "button-name"])}}
     />
-    <button class="input__button">Envoyer</button>
+    <button class="input__button">{{$attributes["button-name"] ?? "Send"}}</button>
 </div>
 

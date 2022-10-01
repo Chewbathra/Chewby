@@ -45,15 +45,14 @@
   aspect-ratio: 1;
   @extend %loader__bordered;
   border-color: transparent var(--accent-color) transparent transparent;
-  animation: rotation 1s ease infinite;
+  animation: rotation 1s linear infinite;
 }
 
 .loader__spinner::after {
   width: 50%;
   aspect-ratio: 1;
   border-color: transparent transparent var(--border-color) transparent;
-  animation: rotation 3s ease infinite;
-  // animation-direction: reverse;
+  animation: rotation 0.9s ease infinite;
 }
 
 @keyframes rotation {

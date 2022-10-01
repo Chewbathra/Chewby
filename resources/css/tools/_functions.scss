@@ -32,6 +32,6 @@
 /// Return a HEX color to RGB (3 number separated by comma) color
 /// @param {HEX} $color - HEX color to cast
 /// @return {RGB} - RGB color
-@function HEXToRGB ($color) {
+@function HEXToRGB($color) {
   @return red($color) + ", " + green($color) + ", " + blue($color);
 }

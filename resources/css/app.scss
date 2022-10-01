@@ -1,41 +1,39 @@
-@import 'tools/functions';
-@import 'tools/mixins';
-@import 'tools/normalize';
+@import "tools/functions";
+@import "tools/mixins";
+@import "tools/normalize";
 
 :root {
-    --text-color: #000000;
-    --accent-color: #33658aff;
-    --body-bgc: #D4D4D4;
-    --nav-bgc: #F8F9FA; 
-    --border-color: #f26419ff;
-    --icon-color: #758e4fff;
-    --loader-bgc: #{HEXToRGB(#000000)};
+  --text-color: #000000;
+  --accent-color: #33658aff;
+  --body-bgc: #d4d4d4;
+  --nav-bgc: #f8f9fa;
+  --border-color: #f26419ff;
+  --icon-color: #758e4fff;
+  --loader-bgc: #{HEXToRGB(#000000)};
 
+  // --queen-blue: #33658aff;
+  // --dark-sky-blue: #86bbd8ff;
+  // --moss-green: #758e4fff;
+  // --honey-yellow: #f6ae2dff;
+  // --orange-red: #f26419ff;
+}
 
-    // --queen-blue: #33658aff;
-    // --dark-sky-blue: #86bbd8ff;
-    // --moss-green: #758e4fff;
-    // --honey-yellow: #f6ae2dff;
-    // --orange-red: #f26419ff;
-  }
-
-@import 'components/button';
-@import 'components/status';
-@import 'components/input';
-@import 'components/loader';
-
+@import "components/button";
+@import "components/status";
+@import "components/input";
+@import "components/loader";
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    // font-family: $font;
-    font-size: 16px;
-    color: var(--text-color);
-    line-height: 1.6;
-    background: var(--body-bgc);
-    scroll-margin: 100px 0 0 0;
-    word-break: break-word;
-  }
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-size: 16px;
+  color: var(--text-color);
+  line-height: 1.6;
+  background: var(--body-bgc);
+  scroll-margin: 100px 0 0 0;
+  word-break: break-word;
+}
