@@ -2,7 +2,6 @@
 
 use Chewbathra\Chewby\Facades\Chewby;
 use Chewbathra\Chewby\Http\Controllers\Admin\DashboardController;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
 // Dont generate URLs when running "php artisan vendor:publish" because config file may be not created
@@ -11,5 +10,5 @@ use Illuminate\Support\Facades\Route;
 Chewby::generateUrls();
 // }
 
-Route::get('/admin/dashboard', [DashboardController::class, 'dashboard'])
+Route::get('/admin', [DashboardController::class, 'dashboard'])
     ->name('admin.dashboard');

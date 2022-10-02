@@ -3,9 +3,7 @@
 namespace Chewbathra\Chewby\Http\Controllers\Admin;
 
 use Chewbathra\Chewby\Facades\Chewby;
-use DateTime;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
+use Chewbathra\Chewby\Models\Model;
 use LogicException;
 
 abstract class ResourceController extends Controller
@@ -48,47 +46,28 @@ abstract class ResourceController extends Controller
         }
     }
 
-    /**
-     * @phpstan-param view-string $view
-     *
-     * @param  Model  $model
-     * @return \Illuminate\View\View
-     */
-    public static function renderOnline(Model $model)
+    public static function renderOnline(Model $model): string
     {
+        /**
+         * @phpstan-ignore-next-line
+         */
         return view('components.status', ['online' => $model->online]);
     }
 
     /**
-     * @param  Model  $model
-     * @return string
+     * @throws \Exception
      */
-    public static function renderOnlineFrom(Model $model)
+    public static function renderOnlineFrom(Model $model): string
     {
-        if (! is_null($model->online_from)) {
-            return self::formatDateTime($model->online_from);
-        }
-
-        return '';
+        return self::formatDateTime($model->online_from);
     }
 
     /**
-     * @param  string  $date
-     * @return string
+     * @throws \Exception
      */
-    private static function formatDateTime(string $date)
+    private static function formatDateTime(string|\DateTime $date): string
     {
         // @phpstan-ignore-next-line
-        return (new DateTime($date))->format(Chewby::getConfig('date_format'));
-    }
-
-    /**
-     * @return Collection
-     */
-    protected function getBreadcrumbItems(): Collection
-    {
-        return collect([
-            'Accueil' => route('admin.dashboard'),
-        ]);
+        return (new \DateTime($date))->format(Chewby::getConfig('date_format'));
     }
 }

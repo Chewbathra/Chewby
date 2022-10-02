@@ -20,7 +20,10 @@ class Config
      */
     public function getConfig(string $element): Collection
     {
-        return collect(config($this->configFilename.'.'.$element));
+        /** @var array<int, mixed> $config */
+        $config = config($this->configFilename.'.'.$element);
+
+        return collect($config);
     }
 
     /**
@@ -42,6 +45,9 @@ class Config
     {
         $models = $this->getTrackedModels();
 
+        /**
+         * @var Collection<string, string>
+         */
         return collect($models)
             ->combine($models)
             ->map(fn ($model) => $this->getControllerForModel($model)->resourcePath);
@@ -69,7 +75,7 @@ class Config
         $controllerClassName = $this->controllersNamespace.$modelBasename.'Controller';
 
         if (! class_exists($controllerClassName)) {
-            throw new \Error("The model \"$model\" has been 
+            throw new \Error("The model \"$model\" has been
             marked as tracked but there is no associated controller
             \"$controllerClassName\". Create it or change the associated controller in the array
             \"controllers\" in \"config/chewby.php\".");

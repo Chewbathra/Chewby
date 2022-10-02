@@ -9,12 +9,14 @@ use Illuminate\Support\Facades\Route;
 
 class Chewby
 {
+    private string $configFilename = 'chewby';
+
     public function generateUrls(): void
     {
-        if (! config('chewby')) {
+        if (! config($this->configFilename)) {
             // Dont generate URLs when running chewby config file dont exist to prevent errors
             Log::channel('stderr')
-                ->alert("Routes not generated because \"chewby\" config file doesn't exist. 
+                ->alert("Routes not generated because \"chewby\" config file doesn't exist.
                     This error is normal if you are running \"vendor:publish\" command !
                     If it is not the case, check that you have a published the chewby config file !");
 
