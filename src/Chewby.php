@@ -12,20 +12,20 @@ class Chewby
     public function generateUrls(): void
     {
         if (! config('chewby')) {
-            // Dont generate URLs when running "php artisan vendor:publish" because config file may be not created
-            // It can generate errors that prevent publishing
+            // Dont generate URLs when running chewby config file dont exist to prevent errors
             Log::channel('stderr')
-            ->alert("Routes not generated because \"chewby\" config file doesn't exist. 
-                    This error is normal if you are running \"vendor:publish\" command !");
+                ->alert("Routes not generated because \"chewby\" config file doesn't exist. 
+                    This error is normal if you are running \"vendor:publish\" command !
+                    If it is not the case, check that you have a published the chewby config file !");
 
             return;
         }
         $trackedModelsWithPath = Config::getTrackedModelsWithPath();
         $base = Config::getConfig('base');
-        if (count($base) == 0 || ! is_string($base[0])) {
+        if (count($base) == 0 || ! is_string($base->first())) {
             throw new Error('You need to define a base URL path for admin content in "config/chewby.php"');
         }
-        $base = $base[0];
+        $base = $base->first();
         foreach ($trackedModelsWithPath as $model => $path) {
             $controller = Config::getControllerForModel($model);
             // Index

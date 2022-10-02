@@ -10,6 +10,8 @@ class Config
 {
     private string $controllersNamespace = 'App\\Http\\Controllers\\Admin\\';
 
+    private string $configFilename = 'chewby';
+
     /**
      * Return config array, transformed to Laravel Collection
      *
@@ -18,7 +20,7 @@ class Config
      */
     public function getConfig(string $element): Collection
     {
-        return collect(config('chewby.'.$element));
+        return collect(config($this->configFilename.'.'.$element));
     }
 
     /**

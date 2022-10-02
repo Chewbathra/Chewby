@@ -2,8 +2,8 @@
 
 namespace Chewbathra\Chewby\Tests;
 
-use Chewbathra\Chewby\ChewbyServiceProvider;
-use Chewbathra\Chewby\Config;
+use Chewbathra\Chewby\Facades\Config;
+use Illuminate\Support\Facades\Facade;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Pest\Datasets;
 
@@ -19,10 +19,15 @@ class TestCase extends Orchestra
         */
     }
 
+    protected function tearDown(): void
+    {
+        Facade::clearResolvedInstances();
+    }
+
     protected function getPackageProviders($app)
     {
         return [
-            ChewbyServiceProvider::class,
+            // ChewbyServiceProvider::class,
         ];
     }
 
@@ -30,12 +35,10 @@ class TestCase extends Orchestra
     {
         config()->set('database.default', 'testing');
         config()->set('chewby', Datasets::get('chewbyConfig'));
-        // $object = new Config();
-        // $reflection = new \ReflectionObject($object);
-        // $property = $reflection->getProperty('controllersNamespace');
-        // $property->setValue($object, 'Chewbathra\\Chewby\\Tests\\Datasets\\Controllers');
-        // $object->controllersNamespace = "test";
-        // $this->config = $object;
+        $object = Config::getFacadeRoot();
+        $reflection = new \ReflectionObject($object);
+        $property = $reflection->getProperty('controllersNamespace');
+        $property->setValue($object, 'Chewbathra\\Chewby\\Tests\\Datasets\\Controllers\\');
 
         /*
         $migration = include __DIR__.'/../database/migrations/create_skeleton_table.php.stub';
