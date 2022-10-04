@@ -1,4 +1,4 @@
-.chewby__button {
+.button {
     background-color: var(--body-bgc);
     border-radius: 8px;
     padding: .8rem;
@@ -9,7 +9,7 @@
     display: inline;
 }
 
-.chewby__button--icon {
+.button.button--icon {
     display: inline;
     margin: 0;
     padding: 0;

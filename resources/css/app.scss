@@ -3,37 +3,49 @@
 @import "tools/normalize";
 
 :root {
-  --text-color: #000000;
-  --accent-color: #33658aff;
-  --body-bgc: #d4d4d4;
-  --nav-bgc: #f8f9fa;
-  --border-color: #f26419ff;
-  --icon-color: #758e4fff;
-  --loader-bgc: #{HEXToRGB(#000000)};
+    --text-color: #000000;
+    --accent-color: #33658aff;
+    --body-bgc: #d4d4d4;
+    --nav-bgc: #f8f9fa;
+    --nav-bgc-darken: #bdc7d0;
+    --border-color: #f26419ff;
+    --icon-color: #758e4fff;
+    --loader-bgc: #{HEXToRGB(#000000)};
 
-  // --queen-blue: #33658aff;
-  // --dark-sky-blue: #86bbd8ff;
-  // --moss-green: #758e4fff;
-  // --honey-yellow: #f6ae2dff;
-  // --orange-red: #f26419ff;
+    // --queen-blue: #33658aff;
+    // --dark-sky-blue: #86bbd8ff;
+    // --moss-green: #758e4fff;
+    // --honey-yellow: #f6ae2dff;
+    // --orange-red: #f26419ff;
 }
 
 @import "components/button";
 @import "components/status";
 @import "components/input";
 @import "components/loader";
+@import "components/icon";
+@import "components/button";
+@import "components/notification";
+@import "components/livewire/table";
+@import "components/livewire/row";
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 body {
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    position: relative;
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
-  font-size: 16px;
-  color: var(--text-color);
-  line-height: 1.6;
-  background: var(--body-bgc);
-  scroll-margin: 100px 0 0 0;
-  word-break: break-word;
+    font-size: 16px;
+    color: var(--text-color);
+    line-height: 1.6;
+    background: var(--body-bgc);
+    scroll-margin: 100px 0 0 0;
+    word-break: break-word;
 }
+
+.chewby__centered {
+    text-align: center;
+}
+

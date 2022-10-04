@@ -1,0 +1,57 @@
+.chewby__models__table {
+    height: 500px;
+    //width: 50%;
+}
+
+.chewby__table {
+    width: 100%;
+    height: auto;
+    background: var(--nav-bgc);
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.chewby__table td,
+.chewby__table th {
+    text-align: left;
+    padding-left: 2rem;
+}
+
+.chewby__table__header {
+    background: var(--accent-color);
+    height: 3.5rem;
+    color: var(--nav-bgc);
+}
+
+.chewby__table__header th.chewby__centered {
+    text-align: center;
+}
+
+.chewby__table__header span {
+    cursor: pointer;
+}
+
+.chewby__table__header .chewby__icon {
+    transform: translateY(2px);
+    width: 15px;
+    height: 15px;
+}
+
+.chewby__table__body td {
+    height: 3rem;
+}
+
+.chewby__table__body td.chewby__centered {
+    text-align: center;
+}
+
+.chewby__table__body tr:nth-child(even) {
+    background-color: var(--nav-bgc-darken);
+}
+.chewby___table__search {
+    display: flex;
+    align-items: end;
+    justify-content: end;
+    margin-bottom: 0.5rem;
+}

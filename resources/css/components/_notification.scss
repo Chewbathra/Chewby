@@ -1,0 +1,31 @@
+.chewby__notification {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    background-color: var(--nav-bgc);
+    border-radius: 1rem;
+    padding: 0.8rem 0.5rem 0.8rem 0.8rem;
+    display: flex;
+    align-items: center;
+
+}
+.chewby__notification--danger {
+    color: var(--border-color);
+}
+.chewby__notification--danger .icon {
+    stroke: var(--border-color);
+}
+.chewby__notification__content {
+    margin: 0 1rem;
+    padding: 0 1rem;
+    border-left: 1px solid;
+    border-right: 1px solid;
+    border-radius: 5px;
+}
+
+.chewby__notification .chewby__notification__icon--close {
+    height: 15px;
+    aspect-ratio: 1;
+    cursor: pointer;
+    stroke: var(--text-color);
+}

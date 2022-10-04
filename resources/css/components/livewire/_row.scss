@@ -1,0 +1,10 @@
+.chewby__table__actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+}
+.chewby__table__actions a {
+    text-decoration: none;
+}
