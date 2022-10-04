@@ -34,7 +34,8 @@ class TestCase extends Orchestra
     public function getEnvironmentSetUp($app)
     {
         config()->set('database.default', 'testing');
-        config()->set('chewby', Datasets::get('chewbyConfig'));
+        config()->set('chewby', Datasets::get('config'));
+        //Update controllers namespace in Config to reflect tests controllers
         $object = Config::getFacadeRoot();
         $reflection = new \ReflectionObject($object);
         $property = $reflection->getProperty('controllersNamespace');

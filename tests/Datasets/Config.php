@@ -4,7 +4,7 @@ use Chewbathra\Chewby\Tests\Datasets\Controllers\TestPostController;
 use Chewbathra\Chewby\Tests\Datasets\Models\TestPost;
 use Chewbathra\Chewby\Tests\Datasets\Models\TestPost2;
 
-dataset('chewbyConfig', [
+dataset('config', [
     'base' => 'testBase',
     'date_format' => 'Y-m-d',
     'models' => [
