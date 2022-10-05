@@ -2,7 +2,6 @@
 
 namespace Chewbathra\Chewby\Http\Livewire\Models;
 
-use App\Models\User;
 use Chewbathra\Chewby\Facades\Config;
 use Chewbathra\Chewby\Http\Controllers\Admin\ResourceController;
 use Chewbathra\Chewby\Models\Model;
@@ -11,6 +10,7 @@ use Livewire\Component;
 class Row extends Component
 {
     public Model $model;
+
     public array $columns;
 
     public function render()

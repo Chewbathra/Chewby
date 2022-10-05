@@ -2,7 +2,6 @@
 
 namespace Chewbathra\Chewby\Http\Controllers\Admin;
 
-use Chewbathra\Chewby\Facades\Chewby;
 use Chewbathra\Chewby\Facades\Config;
 use Chewbathra\Chewby\Models\Model;
 use Illuminate\Contracts\View\View;
@@ -28,32 +27,32 @@ abstract class ResourceController extends Controller
         'id' => [
             'label' => 'ID',
             'render' => null,
-            "centered" => true
+            'centered' => true,
         ],
         'title' => [
             'label' => 'Title',
             'render' => null,
-            "centered" => false
+            'centered' => false,
         ],
         'online' => [
             'label' => 'Online',
             'render' => [ResourceController::class, 'renderOnline'],
-//            'centered' => true
+            //            'centered' => true
         ],
         'online_from' => [
             'label' => 'Publication date',
             'render' => [ResourceController::class, 'renderOnlineFrom'],
-            "centered" => true
+            'centered' => true,
         ],
     ];
 
     final public function __construct()
     {
-        if (!isset($this->resourceName)) {
-            throw new LogicException(get_class($this) . ' must have a $resourceName');
+        if (! isset($this->resourceName)) {
+            throw new LogicException(get_class($this).' must have a $resourceName');
         }
-        if (!isset($this->resourcePath)) {
-            throw new LogicException(get_class($this) . ' must have a $resourcePath');
+        if (! isset($this->resourcePath)) {
+            throw new LogicException(get_class($this).' must have a $resourcePath');
         }
     }
 
@@ -77,7 +76,7 @@ abstract class ResourceController extends Controller
         /** @var Collection<string, string> $controllers */
         $controllers = Config::getTrackedModelsWithControllers(true);
         $controllers = $controllers->flip();
-        if (!$controllers->has($class)) {
+        if (! $controllers->has($class)) {
             return back(404);
         }
         return view("chewby::models.index", [
@@ -107,6 +106,7 @@ abstract class ResourceController extends Controller
 
     /**
      * Return index column. Will automatically add needed columns to columns defined in $indexcolumns
+     *
      * @return array
      */
     public function getIndexColumns(): array
@@ -120,7 +120,7 @@ abstract class ResourceController extends Controller
          * @phpstan-ignore-next-line
          */
         return view('chewby::components.status', [
-            'attributes' => new ComponentAttributeBag(["online" => boolval($model->online)]),
+            'attributes' => new ComponentAttributeBag(['online' => boolval($model->online)]),
         ]);
     }
 
@@ -131,6 +131,7 @@ abstract class ResourceController extends Controller
     {
         return self::formatDateTime($model->online_from);
     }
+
 
 
 }
