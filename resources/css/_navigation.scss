@@ -1,0 +1,107 @@
+.chewby__navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 4.5rem;
+    background-color: var(--nav-bgc);
+    transition: width 0.3s;
+    overflow: hidden;
+    z-index: 10;
+}
+
+.chewby__navbar:hover {
+    width: calc(4.5rem * 3);
+}
+
+.chewby__navbar:hover .chewby__nav__link span,
+.chewby__navbar:hover .chewby__brand__link span {
+    opacity: 1;
+}
+
+.chewby__nav {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.chewby__nav__item,
+.chewby__navbar__brand {
+    display: flex;
+    align-items: center;
+    height: 4rem;
+    border-top: 1px solid var(--body-bgc);
+    border-bottom: 1px solid var(--body-bgc);
+}
+
+.chewby__navbar__brand {
+    height: 5rem;
+    border-bottom: 1px solid var(--accent-color);
+}
+
+.chewby__nav__item:hover {
+    opacity: 0.5;
+}
+
+.chewby__nav__item.chewby__nav__item--active {
+    background-color: var(--icon-color);
+}
+
+.chewby__nav__item.chewby__nav__item--active .chewby__icon {
+    stroke: var(--nav-bgc);
+}
+
+.chewby__nav__item.chewby__nav__item--active span {
+    color: var(--nav-bgc);
+}
+
+.chewby__nav__item:last-child {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.chewby__nav__link,
+.chewby__brand__link {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    gap: 1rem;
+    height: 100%;
+    text-decoration: none;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.chewby__nav__link {
+    margin-left: calc(4.5rem / 2 - var(--icon-width) / 2);
+}
+
+.chewby__brand__link {
+    gap: 0.5rem;
+    margin-left: calc(4.5rem / 2 - 20px);
+}
+
+.chewby__brand__link .icon {
+    stroke: var(--accent-color);
+}
+
+.chewby__brand__link span {
+    color: var(--accent-color);
+}
+
+.chewby__nav__link span {
+    color: var(--text-color);
+}
+
+.chewby__nav__link span,
+.chewby__brand__link span,
+{
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.chewby__nav__logout {
+    height: 100%;
+}

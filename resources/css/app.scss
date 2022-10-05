@@ -11,6 +11,7 @@
     --border-color: #f26419ff;
     --icon-color: #758e4fff;
     --loader-bgc: #{HEXToRGB(#000000)};
+    --icon-width: 24px;
 
     // --queen-blue: #33658aff;
     // --dark-sky-blue: #86bbd8ff;
@@ -19,6 +20,11 @@
     // --orange-red: #f26419ff;
 }
 
+@import "header";
+@import "footer";
+@import "navigation";
+@import "content";
+@import "aside";
 @import "components/button";
 @import "components/status";
 @import "components/input";
@@ -29,20 +35,44 @@
 @import "components/livewire/table";
 @import "components/livewire/row";
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
 * {
     box-sizing: border-box;
 }
 
 body {
     position: relative;
-    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
+    //font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    //"Lucida Sans", Arial, sans-serif;
     font-size: 16px;
+    font-weight: 500;
     color: var(--text-color);
     line-height: 1.6;
     background: var(--body-bgc);
     scroll-margin: 100px 0 0 0;
     word-break: break-word;
+}
+
+main,
+footer {
+    margin-left: 6rem;
+    margin-right: 1.5rem;
+}
+
+main {
+    display: grid;
+    // grid-template-columns: 1fr 200px;
+    // grid-template-areas:
+    //   "header header"
+    //   "content aside";
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "content";
+    min-height: 100%;
+    gap: 1rem;
 }
 
 .chewby__centered {

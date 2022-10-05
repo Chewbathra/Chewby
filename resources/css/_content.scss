@@ -1,0 +1,12 @@
+.content {
+    grid-area: content;
+}
+
+.content .models__table {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+.content .table__search {
+    align-self: end;
+}

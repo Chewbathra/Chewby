@@ -1,3 +1,17 @@
+Array.from(document.querySelectorAll("form[loader-on-submit]")).forEach(el => {
+    el.addEventListener("submit", e => {
+        // e.preventDefault()
+        // let target = e.currentTarget as HTMLFormElement
+        //
+        // while (target && !target.classList.contains("chewby__loader")) {
+        //     console.log(target)
+        //     target = target.parentNode
+        // }
+
+        // loader.style.display = "flex"
+    })
+})
+
 /**
  * Applied on: input-button
  * Set input margin right to fit button width

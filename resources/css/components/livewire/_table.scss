@@ -1,15 +1,20 @@
 .chewby__models__table {
+    position: relative;
     height: 500px;
     //width: 50%;
 }
-
-.chewby__table {
-    width: 100%;
-    height: auto;
+.chewby__table__container {
+    position: relative;
+    //width: 100%;
+    //height: auto;
     background: var(--nav-bgc);
+    overflow: hidden;
+    border-radius: 10px;
+}
+.chewby__table {
     border-collapse: collapse;
     border-radius: 10px;
-    overflow: hidden;
+    width: 100%;
 }
 
 .chewby__table td,
