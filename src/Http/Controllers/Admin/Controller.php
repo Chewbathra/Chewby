@@ -17,7 +17,6 @@ class Controller extends BaseController
      */
     protected static function formatDateTime(string|\DateTime $date): string
     {
-        // @phpstan-ignore-next-line
         return (new \DateTime($date))->format(Config::getConfig('date_format')[0]);
     }
 }

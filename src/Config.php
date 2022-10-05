@@ -29,7 +29,7 @@ class Config
     /**
      * Return tracked models
      *
-     * @return Collection<int, string> Tracked models
+     * @return Collection<int, class-string<Model>> Tracked models
      */
     public function getTrackedModels(): Collection
     {
@@ -51,16 +51,15 @@ class Config
      * Return tracked models and associated controller
      *
      * @param  bool  $classNameForControllers Return controllers as className and not object
-     * @return Collection Tracked models with paths
+     * @return Collection<string, class-string<ResourceController>|ResourceController> Tracked models with paths
      */
     public function getTrackedModelsWithControllers(bool $classNameForControllers = false): Collection
     {
         $models = $this->getTrackedModels();
-
         /**
-         * @var Collection<string, ResourceController>
+         * @var Collection<string, class-string<ResourceController>|ResourceController>
          */
-        return collect($models)
+        return $models
             ->combine($models)
             ->map(fn ($model) => $classNameForControllers ? $this->getControllerForModel($model)::class : $this->getControllerForModel($model));
     }

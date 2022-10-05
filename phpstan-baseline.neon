@@ -11,3 +11,5 @@ parameters:
     tmpDir: build/phpstan
     checkOctaneCompatibility: true
     checkMissingIterableValueType: false
+    excludePaths:
+    		- src/ChewbyServiceProvider.php

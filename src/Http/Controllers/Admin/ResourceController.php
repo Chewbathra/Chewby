@@ -6,9 +6,7 @@ use Chewbathra\Chewby\Facades\Config;
 use Chewbathra\Chewby\Models\Model;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Route;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Session;
 use Illuminate\View\ComponentAttributeBag;
 use LogicException;
 
@@ -61,11 +59,11 @@ abstract class ResourceController extends Controller
         $models = Config::getTrackedModelsWithControllers();
         $items = [];
         foreach ($models as $model => $controller) {
-            $items[$controller->resourceName] = "admin." . $controller->resourcePath . ".index";
+            $items[$controller->resourceName] = 'admin.'.$controller->resourcePath.'.index';
         }
+
         return $items;
     }
-
 
     /**
      * Display a listing of the resource.
@@ -79,9 +77,13 @@ abstract class ResourceController extends Controller
         if (! $controllers->has($class)) {
             return back(404);
         }
-        return view("chewby::models.index", [
-            "resource" => $controllers[$class],
-            "nav" => $this->getNavigationItems()
+
+        /**
+         * @phpstan-ignore-next-line
+         */
+        return view('chewby::models.index', [
+            'resource' => $controllers[$class],
+            'nav' => $this->getNavigationItems(),
         ]);
     }
 
@@ -94,14 +96,15 @@ abstract class ResourceController extends Controller
         /** @var Collection<string, string> $controllers */
         $controllers = Config::getTrackedModelsWithControllers(true);
         $controllers = $controllers->flip();
-        if (!$controllers->has($class)) {
+        if (! $controllers->has($class)) {
             return back(500);
         }
         /** @var Model $model */
         $model = new $controllers[$class]();
         $instance = $model->find($id);
         $instance->delete();
-        return back()->with("success", "Delete successful");
+
+        return back()->with('success', 'Delete successful');
     }
 
     /**
@@ -119,9 +122,7 @@ abstract class ResourceController extends Controller
         /**
          * @phpstan-ignore-next-line
          */
-        return view('chewby::components.status', [
-            'attributes' => new ComponentAttributeBag(['online' => boolval($model->online)]),
-        ]);
+        return view('chewby::components.status', ['attributes' => new ComponentAttributeBag(['online' => boolval($model->online)])]);
     }
 
     /**
@@ -129,9 +130,9 @@ abstract class ResourceController extends Controller
      */
     public static function renderOnlineFrom(Model $model): string
     {
+        /**
+         * @phpstan-ignore-next-line
+         */
         return self::formatDateTime($model->online_from);
     }
-
-
-
 }

@@ -4,6 +4,7 @@ namespace Chewbathra\Chewby\Http\Livewire\Models;
 
 use Chewbathra\Chewby\Facades\Config;
 use Chewbathra\Chewby\Models\Model;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class Table extends Component
@@ -18,7 +19,7 @@ class Table extends Component
 
     public string $orderDirection = 'ASC';
 
-    public function mount(string|Model $resource)
+    public function mount(string|Model $resource): void
     {
         if (! is_subclass_of($resource, Model::class)) {
             throw new \Error("Given class $resource dont extend ".Model::class);
@@ -28,7 +29,7 @@ class Table extends Component
         $this->columns = $controller->getIndexColumns();
     }
 
-    public function setOrder(string $term)
+    public function setOrder(string $term): void
     {
         if ($term == $this->orderTerm) {
             $this->orderDirection = $this->orderDirection == 'ASC' ? 'DESC' : 'ASC';
@@ -38,15 +39,15 @@ class Table extends Component
         }
     }
 
-    public function render()
+    public function render(): View
     {
         $models = $this->model::select(array_keys($this->columns))
             ->where('title', 'like', $this->search.'%')
             ->orderBy($this->orderTerm, $this->orderDirection)
             ->get();
-
-        return view('chewby::components.livewire.models.table', [
-            'models' => $models,
-        ]);
+        /**
+         * @phpstan-ignore-next-line
+         */
+        return view('chewby::components.livewire.models.table', ['models' => $models]);
     }
 }

@@ -2,8 +2,8 @@
 
 namespace Chewbathra\Chewby\Tests\Datasets\Models;
 
+use Chewbathra\Chewby\Models\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 class TestPost extends Model
 {
