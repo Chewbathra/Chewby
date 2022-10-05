@@ -20,7 +20,16 @@
 {{--            @endforeach--}}
 {{--        </ul>--}}
         <div class="actions__buttons">
-            @dump(Session::has('message'))
+            @if(\Illuminate\Support\Facades\Session::has("success"))
+                <x-chewby::notification>
+                    {{session("success")}}
+                </x-chewby::notification>
+            @endif
+            @if(\Illuminate\Support\Facades\Session::has("error"))
+                <x-chewby::notification danger>
+                    {{session("error")}}
+                </x-chewby::notification>
+            @endif
         </div>
     </div>
 </header>

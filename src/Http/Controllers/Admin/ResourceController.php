@@ -6,6 +6,10 @@ use Chewbathra\Chewby\Facades\Chewby;
 use Chewbathra\Chewby\Facades\Config;
 use Chewbathra\Chewby\Models\Model;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Route;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\ComponentAttributeBag;
 use LogicException;
 
@@ -53,20 +57,52 @@ abstract class ResourceController extends Controller
         }
     }
 
+    private function getNavigationItems(): array
+    {
+        $models = Config::getTrackedModelsWithControllers();
+        $items = [];
+        foreach ($models as $model => $controller) {
+            $items[$controller->resourceName] = "admin." . $controller->resourcePath . ".index";
+        }
+        return $items;
+    }
+
+
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(): View|RedirectResponse
     {
         $class = get_class($this);
+        /** @var Collection<string, string> $controllers */
         $controllers = Config::getTrackedModelsWithControllers(true);
         $controllers = $controllers->flip();
         if (!$controllers->has($class)) {
             return back(404);
         }
         return view("chewby::models.index", [
-            "resource" => $controllers[$class]
+            "resource" => $controllers[$class],
+            "nav" => $this->getNavigationItems()
         ]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(int $id): RedirectResponse
+    {
+        $class = get_class($this);
+        /** @var Collection<string, string> $controllers */
+        $controllers = Config::getTrackedModelsWithControllers(true);
+        $controllers = $controllers->flip();
+        if (!$controllers->has($class)) {
+            return back(500);
+        }
+        /** @var Model $model */
+        $model = new $controllers[$class]();
+        $instance = $model->find($id);
+        $instance->delete();
+        return back()->with("success", "Delete successful");
     }
 
     /**
@@ -95,7 +131,6 @@ abstract class ResourceController extends Controller
     {
         return self::formatDateTime($model->online_from);
     }
-
 
 
 }

@@ -12,9 +12,9 @@
         <a href="#">
             <x-icon-edit />
         </a>
-        <form action="#"
+        <form action="{{route($route, ["id" => $model->id])}}"
               method="POST"
-              loader-on-submit
+              loader-on-submit=""
         >
             @method('delete')
             @csrf

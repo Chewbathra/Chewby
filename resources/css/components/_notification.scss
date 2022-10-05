@@ -1,6 +1,6 @@
 .chewby__notification {
     position: absolute;
-    top: 2rem;
+    top: 1rem;
     right: 2rem;
     background-color: var(--nav-bgc);
     border-radius: 1rem;
@@ -12,7 +12,7 @@
 .chewby__notification--danger {
     color: var(--border-color);
 }
-.chewby__notification--danger .icon {
+.chewby__notification--danger .chewby__icon {
     stroke: var(--border-color);
 }
 .chewby__notification__content {

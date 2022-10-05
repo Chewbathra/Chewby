@@ -4,6 +4,7 @@ namespace Chewbathra\Chewby;
 
 use Chewbathra\Chewby\Facades\Config;
 use Error;
+use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
@@ -32,12 +33,15 @@ class Chewby
             $controller = Config::getControllerForModel($model);
             // Index
             Route::get('/'.$base.'/'.$path, [$controller::class, 'index'])
+                ->middleware(StartSession::class)
                 ->name($base.'.'.$path.'.'.'index');
             // Show
             Route::get('/'.$base.'/'.$path.'/{id}', [$controller::class, 'show'])
+                ->middleware(StartSession::class)
                 ->name($base.'.'.$path.'.'.'show');
             // Delete
-            Route::delete('/'.$base.'/'.$path.'/{id}', [$controller::class, 'delete'])
+            Route::delete('/'.$base.'/'.$path.'/{id}', [$controller::class, 'destroy'])
+                ->middleware(StartSession::class)
                 ->name($base.'.'.$path.'.'.'delete');
         }
     }
