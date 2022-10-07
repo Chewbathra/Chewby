@@ -13,6 +13,8 @@ class Table extends Component
 
     public array $columns;
 
+    public string $createRoute;
+
     public string $search = '';
 
     public string $orderTerm = 'id';
@@ -26,6 +28,7 @@ class Table extends Component
         }
         $this->model = new $resource;
         $controller = Config::getControllerForModel($this->model);
+        $this->createRoute = Config::getConfig('base')->first().'.'.$controller->resourcePath.'.create';
         $this->columns = $controller->getIndexColumns();
     }
 

@@ -9,10 +9,10 @@
         </td>
     @endforeach
     <td class="chewby__table__actions">
-        <a href="#">
+        <a href="{{route($routeNames["show"], ["id" => $model->id])}}">
             <x-icon-edit />
         </a>
-        <form action="{{route($route, ["id" => $model->id])}}"
+        <form action="{{route($routeNames["delete"], ["id" => $model->id])}}"
               method="POST"
               loader-on-submit=""
         >

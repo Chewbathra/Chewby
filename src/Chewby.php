@@ -35,6 +35,10 @@ class Chewby
             Route::get('/'.$base.'/'.$path, [$controller::class, 'index'])
                 ->middleware(StartSession::class)
                 ->name($base.'.'.$path.'.'.'index');
+            // Create
+            Route::get('/'.$base.'/'.$path.'/create', [$controller::class, 'create'])
+                ->middleware(StartSession::class)
+                ->name($base.'.'.$path.'.'.'create');
             // Show
             Route::get('/'.$base.'/'.$path.'/{id}', [$controller::class, 'show'])
                 ->middleware(StartSession::class)

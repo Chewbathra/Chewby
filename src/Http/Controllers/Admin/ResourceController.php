@@ -54,37 +54,63 @@ abstract class ResourceController extends Controller
         }
     }
 
-    private function getNavigationItems(): array
-    {
-        $models = Config::getTrackedModelsWithControllers();
-        $items = [];
-        foreach ($models as $model => $controller) {
-            $items[$controller->resourceName] = 'admin.'.$controller->resourcePath.'.index';
-        }
-
-        return $items;
-    }
-
     /**
-     * Display a listing of the resource.
+     * Return  model associated to this controller
+     *
+     * @return class-string<Model>
      */
-    public function index(): View|RedirectResponse
+    private function getModel(): string
     {
         $class = get_class($this);
         /** @var Collection<string, string> $controllers */
         $controllers = Config::getTrackedModelsWithControllers(true);
         $controllers = $controllers->flip();
         if (! $controllers->has($class)) {
-            return back(404);
+            throw new \Error('You try to index, show or delete from a controller that is not linked to a specific model');
         }
 
+        return $controllers[$class];
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(): View
+    {
         /**
          * @phpstan-ignore-next-line
          */
         return view('chewby::models.index', [
-            'resource' => $controllers[$class],
-            'nav' => $this->getNavigationItems(),
+            'resource' => $this->getModel(),
         ]);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(int $id): View
+    {
+        /**
+         * @var Model $model
+         */
+        $model = new ($this->getModel())();
+        $instance = $model->find($id);
+
+        /**
+         * @phpstan-ignore-next-line
+         */
+        return view('chewby::models.show', [
+            'model' => $instance,
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create(): View
+    {
+        $model = new ($this->getModel())();
+        dd('create', $model);
     }
 
     /**
@@ -92,15 +118,10 @@ abstract class ResourceController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $class = get_class($this);
-        /** @var Collection<string, string> $controllers */
-        $controllers = Config::getTrackedModelsWithControllers(true);
-        $controllers = $controllers->flip();
-        if (! $controllers->has($class)) {
-            return back(500);
-        }
-        /** @var Model $model */
-        $model = new $controllers[$class]();
+        /**
+         * @var Model $model
+         */
+        $model = new($this->getModel())();
         $instance = $model->find($id);
         $instance->delete();
 

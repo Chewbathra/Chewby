@@ -19,17 +19,34 @@ test('getTrackedModels() should return all tracked models', function () {
     expect(Config::getTrackedModels()->all())->toBe($result);
 });
 
-test('getControllerForModel() should return correct controller for given model', function () {
-    expect(Config::getControllerForModel(TestPost::class))->toEqual(new TestPostController());
-    expect(Config::getControllerForModel(new TestPost()))->toEqual(new TestPostController());
-    expect(Config::getControllerForModel(TestPost2::class))->toEqual(new TestPost2Controller());
-    expect(Config::getControllerForModel(new TestPost2()))->toEqual(new TestPost2Controller());
-});
-
 test('getTrackedModelsWithPath() should return all tracked models with their correct path', function () {
     $result = [
         TestPost::class => 'testPosts',
         TestPost2::class => 'testPosts2',
     ];
     expect(Config::getTrackedModelsWithPath()->all())->toEqual($result);
+});
+
+test('getTrackedModelsWithControllers() should return all tracked models with their corresponding controllers', function () {
+    $resultWithObject = [
+        TestPost::class => new TestPostController(),
+        TestPost2::class => new TestPost2Controller(),
+    ];
+    $resultWithClassName = [
+        TestPost::class => TestPostController::class,
+        TestPost2::class => TestPost2Controller::class,
+    ];
+    expect(Config::getTrackedModelsWithControllers(false)->all())->toEqual($resultWithObject);
+    expect(Config::getTrackedModelsWithControllers(true)->all())->toEqual($resultWithClassName);
+});
+
+test('getControllerForModel() should return correct controller for given model', function () {
+    $testPost = new TestPost();
+    $testPost2 = new TestPost2();
+    $testPostController = new TestPostController();
+    $testPost2Controller = new TestPost2Controller();
+    expect(Config::getControllerForModel($testPost::class))->toEqual($testPostController);
+    expect(Config::getControllerForModel($testPost))->toEqual($testPostController);
+    expect(Config::getControllerForModel($testPost2::class))->toEqual($testPost2Controller);
+    expect(Config::getControllerForModel($testPost2))->toEqual($testPost2Controller);
 });

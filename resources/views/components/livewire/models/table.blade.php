@@ -1,4 +1,5 @@
 <div class="chewby__models__table">
+    <a href="{{route($createRoute)}}" class="chewby__button">Add</a>
     <form action="#" method="GET" class="chewby___table__search">
         <x-chewby::input type="text" name="search" placeholder="Search" wire:model.debounce.200ms="search"/>
     </form>

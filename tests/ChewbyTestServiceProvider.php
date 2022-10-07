@@ -1,8 +1,7 @@
 <?php
 
-namespace Chewbathra\Chewby;
+namespace Chewbathra\Chewby\Tests;
 
-use Chewbathra\Chewby\Facades\Config;
 use Chewbathra\Chewby\Http\Livewire\Models\Row;
 use Chewbathra\Chewby\Http\Livewire\Models\Table;
 use DirectoryIterator;
@@ -11,7 +10,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 
-class ChewbyServiceProvider extends ServiceProvider
+class ChewbyTestServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
@@ -41,24 +40,16 @@ class ChewbyServiceProvider extends ServiceProvider
             __DIR__.'/../resources/views' => resource_path('views/vendor/chewby'),
         ], 'chewby-views');
         $this->bootComponents(__DIR__.'/../resources/views/components');
-        $this->bootLivewireComponents();
+//        $this->bootLivewireComponents();
         $this->shareDataToView();
-    }
-
-    private function getNavigationItems(): array
-    {
-        $models = Config::getTrackedModelsWithControllers();
-        $items = [];
-        foreach ($models as $model => $controller) {
-            $items[$controller->resourceName] = 'admin.'.$controller->resourcePath.'.index';
-        }
-
-        return $items;
     }
 
     private function shareDataToView(): void
     {
-        View::share('nav', $this->getNavigationItems());
+        View::share('nav', [
+            'testPost' => 'admin.testPosts.index',
+            'testPost2' => 'admin.testPosts2.index',
+        ]);
     }
 
     private function bootLivewireComponents(): void

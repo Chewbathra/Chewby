@@ -18,10 +18,14 @@ class Row extends Component
     {
         /** @var ResourceController $controllers */
         $controllers = Config::getControllerForModel($this->model);
+        $base = Config::getConfig('base')->first();
 
         /**
          * @phpstan-ignore-next-line
          */
-        return view('chewby::components.livewire.models.row', ['route' => 'admin.'.$controllers->resourcePath.'.delete']);
+        return view('chewby::components.livewire.models.row', ['routeNames' => [
+            'delete' => $base.'.'.$controllers->resourcePath.'.delete',
+            'show' => $base.'.'.$controllers->resourcePath.'.show',
+        ]]);
     }
 }

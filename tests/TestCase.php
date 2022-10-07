@@ -27,7 +27,7 @@ class TestCase extends Orchestra
     protected function getPackageProviders($app)
     {
         return [
-            // ChewbyServiceProvider::class,
+            ChewbyTestServiceProvider::class,
         ];
     }
 
@@ -40,7 +40,8 @@ class TestCase extends Orchestra
         $reflection = new \ReflectionObject($object);
         $property = $reflection->getProperty('controllersNamespace');
         $property->setValue($object, 'Chewbathra\\Chewby\\Tests\\Datasets\\Controllers\\');
-
+//        Facade::clearResolvedInstances();
+//        dd(Config::getFacadeRoot());
         /*
         $migration = include __DIR__.'/../database/migrations/create_skeleton_table.php.stub';
         $migration->up();
