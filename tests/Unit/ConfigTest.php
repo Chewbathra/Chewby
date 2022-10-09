@@ -1,52 +1,52 @@
 <?php
 
 use Chewbathra\Chewby\Facades\Config;
-use Chewbathra\Chewby\Tests\Datasets\Controllers\TestPost2Controller;
-use Chewbathra\Chewby\Tests\Datasets\Controllers\TestPostController;
-use Chewbathra\Chewby\Tests\Datasets\Models\TestPost;
-use Chewbathra\Chewby\Tests\Datasets\Models\TestPost2;
+use Chewbathra\Chewby\Tests\Datasets\Controllers\FlightController;
+use Chewbathra\Chewby\Tests\Datasets\Controllers\PostController;
+use Chewbathra\Chewby\Tests\Datasets\Models\Flight;
+use Chewbathra\Chewby\Tests\Datasets\Models\Post;
 
 test('getConfig() should return correct value', function () {
-    $result = 'testBase';
+    $result = 'test';
     expect(Config::getConfig('base')->first())->toBe($result);
 });
 
 test('getTrackedModels() should return all tracked models', function () {
     $result = [
-        TestPost::class,
-        TestPost2::class,
+        Post::class,
+        Flight::class,
     ];
     expect(Config::getTrackedModels()->all())->toBe($result);
 });
 
 test('getTrackedModelsWithPath() should return all tracked models with their correct path', function () {
     $result = [
-        TestPost::class => 'testPosts',
-        TestPost2::class => 'testPosts2',
+        Post::class => 'posts',
+        Flight::class => 'flights',
     ];
     expect(Config::getTrackedModelsWithPath()->all())->toEqual($result);
 });
 
+test('getControllerForModel() should return correct controller for given model', function () {
+    $post = new Post();
+    $flight = new Flight();
+    $postController = new PostController();
+    $flightController = new FlightController();
+    expect(Config::getControllerForModel($post::class))->toEqual($postController);
+    expect(Config::getControllerForModel($post))->toEqual($postController);
+    expect(Config::getControllerForModel($flight::class))->toEqual($flightController);
+    expect(Config::getControllerForModel($flight))->toEqual($flightController);
+});
+
 test('getTrackedModelsWithControllers() should return all tracked models with their corresponding controllers', function () {
     $resultWithObject = [
-        TestPost::class => new TestPostController(),
-        TestPost2::class => new TestPost2Controller(),
+        Post::class => new PostController(),
+        Flight::class => new FlightController(),
     ];
     $resultWithClassName = [
-        TestPost::class => TestPostController::class,
-        TestPost2::class => TestPost2Controller::class,
+        Post::class => PostController::class,
+        Flight::class => FlightController::class,
     ];
     expect(Config::getTrackedModelsWithControllers(false)->all())->toEqual($resultWithObject);
     expect(Config::getTrackedModelsWithControllers(true)->all())->toEqual($resultWithClassName);
-});
-
-test('getControllerForModel() should return correct controller for given model', function () {
-    $testPost = new TestPost();
-    $testPost2 = new TestPost2();
-    $testPostController = new TestPostController();
-    $testPost2Controller = new TestPost2Controller();
-    expect(Config::getControllerForModel($testPost::class))->toEqual($testPostController);
-    expect(Config::getControllerForModel($testPost))->toEqual($testPostController);
-    expect(Config::getControllerForModel($testPost2::class))->toEqual($testPost2Controller);
-    expect(Config::getControllerForModel($testPost2))->toEqual($testPost2Controller);
 });

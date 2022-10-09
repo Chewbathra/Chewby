@@ -1,17 +1,17 @@
 <?php
 
-use Chewbathra\Chewby\Tests\Datasets\Controllers\TestPostController;
-use Chewbathra\Chewby\Tests\Datasets\Models\TestPost;
-use Chewbathra\Chewby\Tests\Datasets\Models\TestPost2;
+use Chewbathra\Chewby\Tests\Datasets\Controllers\PostController;
+use Chewbathra\Chewby\Tests\Datasets\Models\Flight;
+use Chewbathra\Chewby\Tests\Datasets\Models\Post;
 
 dataset('config', [
-    'base' => 'testBase',
+    'base' => 'test',
     'date_format' => 'Y-m-d',
     'models' => [
-        TestPost::class,
-        TestPost2::class,
+        Post::class,
+        Flight::class,
     ],
     'controllers' => [
-        TestPost::class => TestPostController::class,
+        Post::class => PostController::class,
     ],
 ]);

@@ -122,7 +122,7 @@ abstract class ResourceController extends Controller
          * @var Model $model
          */
         $model = new($this->getModel())();
-        $instance = $model->find($id);
+        $instance = $model->findOrFail($id);
         $instance->delete();
 
         return back()->with('success', 'Delete successful');

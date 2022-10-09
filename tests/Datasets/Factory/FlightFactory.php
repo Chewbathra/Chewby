@@ -5,9 +5,9 @@ namespace Chewbathra\Chewby\Tests\Datasets\Factory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<Chewbathra\Chewby\Tests\Datasets\Models\Post>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<Chewbathra\Chewby\Tests\Datasets\Models\Flight>
  */
-class PostFactory extends Factory
+class FlightFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -23,7 +23,6 @@ class PostFactory extends Factory
             'online' => $online,
             'online_from' => fake()->dateTime(),
             'online_until' => fake()->dateTime(),
-            'content' => null,
         ];
     }
 }
