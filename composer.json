@@ -1,6 +1,7 @@
 {
     "name": "chewbathra/chewby",
     "description": "Next-Gen Headless CMS for Laravel",
+    "version": "0.0.1",
     "keywords": [
         "Chewbathra",
         "laravel",
@@ -41,7 +42,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Chewbathra\\Chewby\\": "src"
+            "Chewbathra\\Chewby\\": "src",
+            "Chewbathra\\Chewby\\Database\\": "database"
         }
     },
     "autoload-dev": {

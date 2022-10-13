@@ -29,11 +29,19 @@ class Config
     /**
      * Return tracked models
      *
-     * @return Collection<int, class-string<Model>> Tracked models
+     * @param  bool  $asObject Define if model are returned as classname or object
+     * @return Collection<int, class-string<Model> | Model> Tracked models
      */
-    public function getTrackedModels(): Collection
+    public function getTrackedModels(bool $asObject = false): Collection
     {
-        return $this->getConfig('models');
+        if (! $asObject) {
+            return $this->getConfig('models');
+        } else {
+            /**
+             * @var Collection<int, class-string<Model> | Model>
+             */
+            return $this->getConfig('models')->map(fn ($model) => (new $model()));
+        }
     }
 
     /**
@@ -50,10 +58,10 @@ class Config
     /**
      * Return tracked models and associated controller
      *
-     * @param  bool  $classNameForControllers Return controllers as className and not object
+     * @param  bool  $controllersAsClassName Define if controllers are returned as classname or object
      * @return Collection<string, class-string<ResourceController>|ResourceController> Tracked models with paths
      */
-    public function getTrackedModelsWithControllers(bool $classNameForControllers = false): Collection
+    public function getTrackedModelsWithControllers(bool $controllersAsClassName = false): Collection
     {
         $models = $this->getTrackedModels();
         /**
@@ -61,7 +69,7 @@ class Config
          */
         return $models
             ->combine($models)
-            ->map(fn ($model) => $classNameForControllers ? $this->getControllerForModel($model)::class : $this->getControllerForModel($model));
+            ->map(fn ($model) => $controllersAsClassName ? $this->getControllerForModel($model)::class : $this->getControllerForModel($model));
     }
 
     /**

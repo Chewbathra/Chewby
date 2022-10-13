@@ -2,6 +2,7 @@
 
 namespace Chewbathra\Chewby;
 
+use Chewbathra\Chewby\Database\Schema;
 use Chewbathra\Chewby\Facades\Config;
 use Chewbathra\Chewby\Http\Livewire\Models\Row;
 use Chewbathra\Chewby\Http\Livewire\Models\Table;
@@ -23,6 +24,14 @@ class ChewbyServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__.'/../config/blade-lucide-icons.php', 'blade-lucide-icons'
         );
+        // Change default blueprint for database migrations
+//        $builder = $this->app['db']->connection(null)->getSchemaBuilder();
+//        $builder->blueprintResolver(static fn ($table, $callback) => new Blueprint($table, $callback));
+//        $this->app->extend(Builder::class, function ($service, $app) {
+//            $service->bind('db.schema', fn() => schema::customizedSchemaBuilder());
+        ////            return schema::customizedSchemaBuilder();
+//        });
+        $this->app->bind('db.schema', fn () => Schema::customizedSchemaBuilder());
     }
 
     /**
@@ -32,6 +41,7 @@ class ChewbyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->publishes([
             __DIR__.'/../config/chewby.php' => config_path('chewby.php'),
         ], 'chewby-config');

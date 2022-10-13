@@ -53,8 +53,7 @@ class Table extends Component
                 $this->model::select(array_keys($this->columns)),
                 'title'
             )
-        )
-            ->paginate(10);
+        )->paginate(10);
         /**
          * @phpstan-ignore-next-line
          */

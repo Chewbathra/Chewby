@@ -8,6 +8,7 @@ parameters:
         - config
         - resources
         - routes
+        - database
     tmpDir: build/phpstan
     checkOctaneCompatibility: true
     checkMissingIterableValueType: false
