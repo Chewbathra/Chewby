@@ -23,7 +23,8 @@ class PostFactory extends Factory
             'online' => $online,
             'online_from' => fake()->dateTime(),
             'online_until' => fake()->dateTime(),
-            'content' => null,
+            'description' => null,
+            'editor' => null,
         ];
     }
 }

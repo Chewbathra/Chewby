@@ -6,7 +6,9 @@ use Chewbathra\Chewby\Facades\Config;
 use Chewbathra\Chewby\Models\Model;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\ComponentAttributeBag;
 use LogicException;
 
@@ -21,7 +23,7 @@ abstract class ResourceController extends Controller
      */
     protected array $indexColumns = [];
 
-    protected const neededColumns = [
+    final protected const neededColumns = [
         'id' => [
             'label' => 'ID',
             'render' => null,
@@ -30,12 +32,11 @@ abstract class ResourceController extends Controller
         'title' => [
             'label' => 'Title',
             'render' => null,
-            'centered' => false,
         ],
         'online' => [
             'label' => 'Online',
             'render' => [ResourceController::class, 'renderOnline'],
-            //            'centered' => true
+            'centered' => true,
         ],
         'online_from' => [
             'label' => 'Publication date',
@@ -55,11 +56,30 @@ abstract class ResourceController extends Controller
     }
 
     /**
+     * Return attributes types of given model
+     *
+     * @param  Model  $model
+     * @return Collection<string, string>
+     */
+    final public function getModelTypes(Model $model): Collection
+    {
+        $types = DB::table('chewby_types')->where('tableName', '=', $model->getTable())->get();
+
+        /**
+         * @var Collection<string, string>
+         */
+        return $types->mapWithKeys(function ($type) {
+            return [$type->columnName => $type->columnType];
+        });
+    }
+
+    /**
      * Return  model associated to this controller
      *
-     * @return class-string<Model>
+     * @param  bool  $asObject Return model as object or className
+     * @return string|Model
      */
-    private function getModel(): string
+    final public function getModel(bool $asObject = false): string|Model
     {
         $class = get_class($this);
         /** @var Collection<string, string> $controllers */
@@ -69,7 +89,7 @@ abstract class ResourceController extends Controller
             throw new \Error('You try to index, show or delete from a controller that is not linked to a specific model');
         }
 
-        return $controllers[$class];
+        return ! $asObject ? $controllers[$class] : new $controllers[$class]();
     }
 
     /**
@@ -77,31 +97,56 @@ abstract class ResourceController extends Controller
      */
     public function index(): View
     {
-        /**
-         * @phpstan-ignore-next-line
-         */
         return view('chewby::models.index', [
             'resource' => $this->getModel(),
         ]);
     }
 
     /**
-     * Display the specified resource.
+     * Display and edit the specified resource.
      */
     public function show(int $id): View
     {
         /**
          * @var Model $model
          */
-        $model = new ($this->getModel())();
+        $model = $this->getModel(true);
         $instance = $model->find($id);
+        $types = $this->getModelTypes($model);
 
-        /**
-         * @phpstan-ignore-next-line
-         */
         return view('chewby::models.show', [
             'model' => $instance,
+            'types' => $types,
         ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, int $id): RedirectResponse
+    {
+        $data = $request->all();
+        $model = $this->getModel(true);
+        $instance = $model->find($id);
+        $types = $this->getModelTypes($model);
+        // Verify boolean attributes (as checkbox) to set the value to 0 since "Resquest->all()" don't store checkbox value if they are not checked
+        foreach ($types as $attribute => $type) {
+            if ($type === 'boolean') {
+                if (array_key_exists($attribute, $data)) {
+                    $data[$attribute] = 1;
+                } else {
+                    $data[$attribute] = 0;
+                }
+            }
+        }
+        foreach ($instance->getAttributes() as $attribute => $value) {
+            if (array_key_exists($attribute, $data) && $value !== $data[$attribute]) {
+                $instance->$attribute = $data[$attribute];
+            }
+        }
+        $instance->save();
+
+        return back()->with('success', 'Model updated');
     }
 
     /**
@@ -133,7 +178,7 @@ abstract class ResourceController extends Controller
      *
      * @return array
      */
-    public function getIndexColumns(): array
+    final public function getIndexColumns(): array
     {
         return array_merge(self::neededColumns, $this->indexColumns);
     }

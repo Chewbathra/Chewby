@@ -8,9 +8,6 @@ class DashboardController extends Controller
 {
     public function dashboard(): View
     {
-        /**
-         * @phpstan-ignore-next-line
-         */
         return view('chewby::dashboard');
     }
 }

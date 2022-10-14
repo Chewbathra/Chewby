@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -13,14 +12,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-            $table->string('title')->nullable(false);
-            $table->boolean('online')->nullable(false)->default(false);
-            $table->dateTime('online_from')->nullable(true)->default(null);
-            $table->dateTime('online_until')->nullable(true)->default(null);
-            $table->json('content')->nullable(true)->default(null);
+        Schema::create('posts', function (Chewbathra\Chewby\Database\Blueprint $table) {
+            $table->neededColumns();
+            $table->softDeletes();
+            $table->wysiwyg('description')->nullable(true)->default(null);
+            $table->editor('editor');
         });
     }
 

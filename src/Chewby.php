@@ -3,6 +3,7 @@
 namespace Chewbathra\Chewby;
 
 use Chewbathra\Chewby\Facades\Config;
+use Chewbathra\Chewby\Models\Model;
 use Error;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Log;
@@ -12,6 +13,26 @@ class Chewby
 {
     private string $configFilename = 'chewby';
 
+    /**
+     * Generate route name for given model and action
+     *
+     * @param  Model  $model
+     * @param  string  $action Can be one of theses: "index", "show", "delete", "update"
+     * @return string
+     */
+    public function routeNameForModel(Model $model, string $action): string
+    {
+        $controllers = Config::getControllerForModel($model);
+        $base = Config::getConfig('base')->first();
+
+        return $base.'.'.$controllers->resourcePath.'.'.$action;
+    }
+
+    /**
+     * Generate URLs for each tracked model
+     *
+     * @return void
+     */
     public function generateUrls(): void
     {
         if (! config($this->configFilename)) {
@@ -31,45 +52,26 @@ class Chewby
         $base = $base->first();
         foreach ($trackedModelsWithPath as $model => $path) {
             $controller = Config::getControllerForModel($model);
-            // Index
-            Route::get('/'.$base.'/'.$path, [$controller::class, 'index'])
-                ->middleware(StartSession::class)
-                ->name($base.'.'.$path.'.'.'index');
-            // Create
-            Route::get('/'.$base.'/'.$path.'/create', [$controller::class, 'create'])
-                ->middleware(StartSession::class)
-                ->name($base.'.'.$path.'.'.'create');
-            // Show
-            Route::get('/'.$base.'/'.$path.'/{id}', [$controller::class, 'show'])
-                ->middleware(StartSession::class)
-                ->name($base.'.'.$path.'.'.'show');
-            // Delete
-            Route::delete('/'.$base.'/'.$path.'/{id}', [$controller::class, 'destroy'])
-                ->middleware(StartSession::class)
-                ->name($base.'.'.$path.'.'.'delete');
+            Route::middleware(StartSession::class)->group(function () use ($base, $path, $controller) {
+                // Index
+                Route::get('/'.$base.'/'.$path, [$controller::class, 'index'])
+                    ->name($base.'.'.$path.'.'.'index');
+                // Create
+                Route::get('/'.$base.'/'.$path.'/create', [$controller::class, 'create'])
+                    ->name($base.'.'.$path.'.'.'create');
+                // Show
+                Route::get('/'.$base.'/'.$path.'/{id}', [$controller::class, 'show'])
+                    ->name($base.'.'.$path.'.'.'show');
+                // Update
+                Route::patch('/'.$base.'/'.$path.'/{id}', [$controller::class, 'update'])
+                    ->name($base.'.'.$path.'.'.'update');
+                // Create
+                Route::post('/'.$base.'/'.$path, [$controller::class, 'create'])
+                    ->name($base.'.'.$path.'.'.'create');
+                // Delete
+                Route::delete('/'.$base.'/'.$path.'/{id}', [$controller::class, 'destroy'])
+                    ->name($base.'.'.$path.'.'.'delete');
+            });
         }
     }
-    /*
-    public function handleRequest(Request $request)
-    {
-        $requestSegments = $request->segments();
-        array_shift($requestSegments); //Remove "admin" segment
-        $trackedModels = Config::getTrackedModelsWithPath();
-        foreach($trackedModels as $model => $path) {
-            if ($requestSegments[0] === $path) {
-                if (count($requestSegments) > 1) {
-                    if (count($requestSegments) > 2) {
-                        return abort(404);
-                    }
-                    if (ctype_digit($requestSegments[1])) { //Test if second segment is a integer
-                        return view("posts.show", ["post" => (new $model)->find($requestSegments[1])]);
-                    }
-                    return abort(404);
-                }
-                return ["posts.index", $model];
-            }
-        }
-        return abort(404);
-    }
-    */
 }

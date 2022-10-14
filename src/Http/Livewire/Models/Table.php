@@ -54,9 +54,7 @@ class Table extends Component
                 'title'
             )
         )->paginate(10);
-        /**
-         * @phpstan-ignore-next-line
-         */
+
         return view('chewby::components.livewire.models.table', ['models' => $models]);
     }
 }

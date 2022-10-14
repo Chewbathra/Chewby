@@ -143,6 +143,6 @@ class Blueprint extends BaseBlueprint
      */
     public function editor(string $column = 'editor'): ColumnDefinition
     {
-        return $this->addColumn('json', $column, ['chewby_type' => 'editor']);
+        return $this->addColumn('json', $column, ['chewby_type' => 'editor'])->nullable(true)->default(null);
     }
 }

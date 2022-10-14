@@ -23,6 +23,8 @@ class FlightFactory extends Factory
             'online' => $online,
             'online_from' => fake()->dateTime(),
             'online_until' => fake()->dateTime(),
+            'description' => null,
+            'editor' => null,
         ];
     }
 }

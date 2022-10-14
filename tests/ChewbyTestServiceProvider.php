@@ -2,6 +2,7 @@
 
 namespace Chewbathra\Chewby\Tests;
 
+use Chewbathra\Chewby\Database\Schema;
 use Chewbathra\Chewby\Http\Livewire\Models\Row;
 use Chewbathra\Chewby\Http\Livewire\Models\Table;
 use DirectoryIterator;
@@ -22,6 +23,7 @@ class ChewbyTestServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__.'/../config/blade-lucide-icons.php', 'blade-lucide-icons'
         );
+        $this->app->bind('db.schema', fn () => Schema::customizedSchemaBuilder());
     }
 
     /**

@@ -44,6 +44,9 @@ class TestCase extends Orchestra
         $property = $reflection->getProperty('controllersNamespace');
         $property->setValue($object, 'Chewbathra\\Chewby\\Tests\\Datasets\\Controllers\\');
 
+        $migration = include __DIR__.'/../database/migrations/2022_10_11_124115_types.php';
+        $migration->up();
+
         $migration = include __DIR__.'/Datasets/Migrations/create_posts_table.php';
         $migration->up();
 
